@@ -1,34 +1,34 @@
 <mat-card>
-
-    <form (submit)="onSavePost(postForm)" #postForm="ngForm">
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+    <form (submit)="onSavePost(postForm)" #postForm="ngForm" *ngIf="!isLoading">
         <mat-form-field>
-            <input 
+            <input
                 required
-                matInput 
-                placeholder="Title" 
+                matInput
+                placeholder="Title"
                 minlength="5"
                 maxlength="50"
                 type="text"
-                name="title" 
+                name="title"
                 [ngModel]="post?.title"
                 #title="ngModel">
                 <mat-error *ngIf="title.invalid">Please enter a post title with 5 characters or more.</mat-error>
         </mat-form-field>
         <mat-form-field>
-            <textarea 
+            <textarea
                 required
-                matInput 
-                placeholder="Content" 
+                matInput
+                placeholder="Content"
                 minlength="10"
                 maxlength="300"
-                rows="4" 
+                rows="4"
                 name="content"
                 [ngModel]="post?.content"
                 #content="ngModel"></textarea>
                 <mat-error *ngIf="content.invalid">Please enter a post content with 10 characters or more.</mat-error>
         </mat-form-field>
-        <button 
-            mat-raised-button 
+        <button
+            mat-raised-button
             color="accent"
             type="submit"
             [disabled]="postForm.invalid"
