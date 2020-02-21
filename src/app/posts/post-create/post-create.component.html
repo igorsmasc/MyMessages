@@ -1,6 +1,6 @@
 <mat-card>
 
-    <form (submit)="onAddPost(postForm)" #postForm="ngForm">
+    <form (submit)="onSavePost(postForm)" #postForm="ngForm">
         <mat-form-field>
             <input 
                 required
@@ -10,7 +10,7 @@
                 maxlength="50"
                 type="text"
                 name="title" 
-                ngModel
+                [ngModel]="post?.title"
                 #title="ngModel">
                 <mat-error *ngIf="title.invalid">Please enter a post title with 5 characters or more.</mat-error>
         </mat-form-field>
@@ -23,7 +23,7 @@
                 maxlength="300"
                 rows="4" 
                 name="content"
-                ngModel
+                [ngModel]="post?.content"
                 #content="ngModel"></textarea>
                 <mat-error *ngIf="content.invalid">Please enter a post content with 10 characters or more.</mat-error>
         </mat-form-field>
