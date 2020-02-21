@@ -9,21 +9,29 @@ import { PostsService } from '../posts.service';
     selector: 'app-post-create',
     templateUrl: './post-create.component.html',
     styleUrls: ['./post-create.component.css']
-}) 
+})
 export class PostCreateComponent implements OnInit {
     private mode = 'create';
     private postId: string;
     post: Post;
 
     constructor(public postsService: PostsService,
-                public route: ActivatedRoute) {}
+        public route: ActivatedRoute) { }
 
     ngOnInit() {
         this.route.paramMap.subscribe((paramMap: ParamMap) => {
-            if(paramMap.has('postId')) {
+            if (paramMap.has('postId')) {
                 this.mode = 'edit';
                 this.postId = paramMap.get('postId');
-                this.post = this.postsService.getPost(this.postId);
+                this.postsService.getPost(this.postId).subscribe(
+                    postData => {
+                        this.post = {
+                            id: postData._id,
+                            title: postData.title,
+                            content: postData.content
+                        }
+                    }
+                );
             } else {
                 this.mode = 'create';
                 this.postId = null;
@@ -32,10 +40,10 @@ export class PostCreateComponent implements OnInit {
     }
 
     onSavePost(form: NgForm) {
-        if(form.invalid) {
+        if (form.invalid) {
             return;
         }
-        if(this.mode === 'create') {
+        if (this.mode === 'create') {
             this.postsService.addPost(form.value.title, form.value.content)
         } else {
             this.postsService.updatePost(this.postId, form.value.title, form.value.content);
