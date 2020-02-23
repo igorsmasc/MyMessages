@@ -10,8 +10,9 @@ mongoose.connect('mongodb+srv://igor:192022bc@cluster0-lkefb.mongodb.net/my-mess
     .then(() => {
         console.log('Connected to the database')
     })
-    .catch(() => {
-        console.log('Connection fail!')
+    .catch((error) => {
+        console.log('Connection fail!');
+        console.log(error);
     });
 
 app.use(bodyParser.json());
