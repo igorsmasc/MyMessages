@@ -18,5 +18,5 @@
     [length]="totalPosts"
     [pageSize]="postsPerPage"
     [pageSizeOptions]="pageSizeOptions"
-    (page)="onChangedPage($event)"></mat-paginator>
+    (page)="onChangedPage($event)" *ngIf="posts.length"></mat-paginator>
 <p class="mat-body-1 info-text" *ngIf="!posts.length && !isLoading">No posts added yet!</p>
