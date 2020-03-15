@@ -11,10 +11,7 @@ export class PostsService {
   private posts: Post[] = [];
   private postsUpdated = new Subject<{ posts: Post[]; postCount: number }>();
 
-  constructor(
-    private http: HttpClient,
-    private router: Router
-    ) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   getPosts(postsPerPage: number, currentPage: number) {
     const queryParams = `?pagesize=${postsPerPage}&page=${currentPage}`;
@@ -39,7 +36,6 @@ export class PostsService {
         })
       )
       .subscribe(postsData => {
-
         this.posts = postsData.posts;
         this.postsUpdated.next({
           posts: [...this.posts],
@@ -58,6 +54,7 @@ export class PostsService {
       title: string;
       content: string;
       imagePath: string;
+      creator: string;
     }>("http://localhost:3000/api/posts/" + id);
   }
 
@@ -88,7 +85,13 @@ export class PostsService {
       postData.append("content", content);
       postData.append("image", image, title);
     } else {
-      postData = { id: id, title: title, content: content, imagePath: image };
+      postData = {
+        id: id,
+        title: title,
+        content: content,
+        imagePath: image,
+        creator: null
+      };
     }
 
     this.http
@@ -99,7 +102,6 @@ export class PostsService {
   }
 
   deletePost(postId: string) {
-    return this.http
-      .delete("http://localhost:3000/api/posts/" + postId);
+    return this.http.delete("http://localhost:3000/api/posts/" + postId);
   }
 }
